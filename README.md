@@ -23,8 +23,9 @@ Pushes the local docker image to an repository on dockerhub.
 ## Docker compose exampel file
 
 ```js
-docker version: '3' frontend:
+version: '3'
 
+frontend:
    container_name: frontend
    image: docker image
    volumes:
@@ -35,6 +36,5 @@ docker version: '3' frontend:
    stdin_open: true
    environment:
      - CHOKIDAR_USEPOLLING=true
-     - REACT_APP_BASE_URL={base_url_to_api}
    command: npm run start
 ```
