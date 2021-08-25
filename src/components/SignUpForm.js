@@ -1,17 +1,19 @@
+// Hooks
 import { useState } from "react";
+// Styles
 import styled from "styled-components";
+// Components
 import Button from "./ui/Button";
 import Card from "./ui/Card";
 import InputField from "./ui/InputField";
-
+// Icons
 import { AiOutlineCloseCircle } from "react-icons/ai";
-
+// Api
 import { createUser } from "../api/api";
 
 const SignUpForm = ({ setIsRegister }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-
   const [registerErrorMsg, setRegisterErrorMsg] = useState("");
   const [registerError, setRegisterError] = useState(false);
 
@@ -21,10 +23,8 @@ const SignUpForm = ({ setIsRegister }) => {
       username,
       password,
     };
-    console.log(newUser);
     try {
       const response = await createUser(newUser);
-      console.log(response);
       setIsRegister(false);
     } catch (error) {
       const err = error.response;

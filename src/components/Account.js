@@ -1,4 +1,6 @@
+// styles
 import styled from "styled-components";
+// Components
 import Card from "./ui/Card";
 
 const Account = ({ account, onClick }) => {

@@ -1,3 +1,4 @@
+// Styles
 import styled from "styled-components";
 
 const Card = ({ children, minWidth, hover }) => {

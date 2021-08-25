@@ -1,8 +1,11 @@
+// React
 import { useState } from "react";
+// Styles
 import styled from "styled-components";
+// Components
 import Button from "./ui/Button";
 import InputField from "./ui/InputField";
-
+// Api
 import { authUser } from "../api/api";
 
 const Login = ({ setUser, setIsLoggedIn, setIsRegister }) => {
@@ -14,7 +17,6 @@ const Login = ({ setUser, setIsLoggedIn, setIsRegister }) => {
   const handleLogin = async () => {
     try {
       const response = await authUser(username, password);
-      console.log(response.data);
       setUser(response.data);
       setLoginError(false);
       setIsLoggedIn(true);

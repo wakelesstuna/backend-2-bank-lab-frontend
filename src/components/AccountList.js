@@ -1,5 +1,7 @@
+// Styles
 import styled from "styled-components";
 import { colors } from "../constants/color";
+// Components
 import Account from "./Account";
 
 const AccountList = ({ accountList, setCurrentAccount }) => {
@@ -34,6 +36,7 @@ const AccountListStyle = styled.div`
     height: 500px;
     overflow-y: scroll;
     &::-webkit-scrollbar-track {
+      box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
       -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
       border-radius: 10px;
       background-color: ${(props) =>
@@ -47,6 +50,7 @@ const AccountListStyle = styled.div`
 
     &::-webkit-scrollbar-thumb {
       border-radius: 10px;
+      box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
       -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
       background-color: ${(props) =>
         props.colors.scrollBar ? props.colors.scrollBar : "red"};

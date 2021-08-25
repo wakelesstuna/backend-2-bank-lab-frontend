@@ -1,6 +1,7 @@
+// Styles
 import styled from "styled-components";
 import { colors } from "./constants/color";
-// pages
+// Pages
 import HomePage from "./pages/HomePage";
 
 function App() {

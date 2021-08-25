@@ -1,5 +1,6 @@
+// Styles
 import styled from "styled-components";
-
+// Util
 import { makeFirstLetterCapital } from "../utils/util";
 
 const User = ({ user, currentAccount }) => {

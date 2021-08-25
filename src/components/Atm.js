@@ -1,20 +1,21 @@
+// Hooks
 import { useEffect, useState } from "react";
+// Styles
 import styled from "styled-components";
+// Components
 import Button from "./ui/Button";
 import InputField from "./ui/InputField";
-
 import Title from "./Title";
 import User from "./User";
-
+import Logout from "./Logout";
+import AccountList from "./AccountList";
+// Api
 import {
   makeDeposit,
   makeWithdraw,
   fetchUser,
   createAccount,
 } from "../api/api";
-import axios from "axios";
-import Logout from "./Logout";
-import AccountList from "./AccountList";
 
 const Atm = ({ user, setUser, setIsLoggedIn }) => {
   const [currentAccount, setCurrentAccount] = useState(1);
@@ -27,7 +28,6 @@ const Atm = ({ user, setUser, setIsLoggedIn }) => {
 
   const handleCreateAccount = async () => {
     const response = await createAccount(user.username);
-    console.log(response.data.accountNumber);
     setCurrentAccount(response.data.accountNumber);
   };
 
@@ -58,9 +58,6 @@ const Atm = ({ user, setUser, setIsLoggedIn }) => {
 
   useEffect(() => {
     async function fetchData() {
-      /* const response = await axios.get(
-        `http://localhost:8080/api/v1/users/user/?username=${user.username}`
-      ); */
       const response = await fetchUser(user.username);
       const fetchedUser = await response.data;
       setUser(fetchedUser);
@@ -86,7 +83,7 @@ const Atm = ({ user, setUser, setIsLoggedIn }) => {
             <h4>Balance:</h4>
             <p>{balance}</p>
           </div>
-          <div className='depositContainer'>
+          <div>
             <InputField
               type='number'
               label='Deposit'
@@ -96,7 +93,7 @@ const Atm = ({ user, setUser, setIsLoggedIn }) => {
             />
             <Button title='Deposit' onClick={handleDeposit} />
           </div>
-          <div className='withdrawContainer'>
+          <div>
             <InputField
               type='number'
               label='Withdraw'
@@ -126,16 +123,13 @@ const AtmStyle = styled.div`
   width: 100%;
   padding: 0 2rem;
   padding-bottom: 2rem;
-
   .row {
     display: flex;
     width: 100%;
   }
-
   .col2 {
     width: 50%;
   }
-
   .header {
     display: flex;
     align-items: center;
@@ -154,8 +148,6 @@ const AtmStyle = styled.div`
     p {
       padding-left: 5px;
     }
-  }
-  .depositContainer {
   }
 `;
 

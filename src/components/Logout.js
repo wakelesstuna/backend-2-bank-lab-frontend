@@ -1,4 +1,6 @@
+// Styles
 import styled from "styled-components";
+// Icons
 import { RiLogoutBoxLine } from "react-icons/ri";
 
 const Logout = ({ setIsLoggedIn, setUser }) => {
