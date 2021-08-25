@@ -6,7 +6,12 @@ import InputField from "./ui/InputField";
 import Title from "./Title";
 import User from "./User";
 
-import { makeDeposit, makeWithdraw, fetchUser } from "../api/api";
+import {
+  makeDeposit,
+  makeWithdraw,
+  fetchUser,
+  createAccount,
+} from "../api/api";
 import axios from "axios";
 import Logout from "./Logout";
 import AccountList from "./AccountList";
@@ -19,6 +24,12 @@ const Atm = ({ user, setUser, setIsLoggedIn }) => {
 
   const [withdrawError, setWithdrawError] = useState(false);
   const [withdrawErrorMsg, setWithdrawErrorMsg] = useState("");
+
+  const handleCreateAccount = async () => {
+    const response = await createAccount(user.username);
+    console.log(response.data.accountNumber);
+    setCurrentAccount(response.data.accountNumber);
+  };
 
   const handleDeposit = async () => {
     const response = await makeDeposit(user.username, deposit, currentAccount);
@@ -44,17 +55,19 @@ const Atm = ({ user, setUser, setIsLoggedIn }) => {
       }
     }
   };
+
   useEffect(() => {
     async function fetchData() {
-      const response = await axios.get(
+      /* const response = await axios.get(
         `http://localhost:8080/api/v1/users/user/?username=${user.username}`
-      );
-      const fetchUser = await response.data;
-      setUser(fetchUser);
-      setBalance(fetchUser.account[currentAccount - 1].balance);
+      ); */
+      const response = await fetchUser(user.username);
+      const fetchedUser = await response.data;
+      setUser(fetchedUser);
+      setBalance(fetchedUser.account[currentAccount - 1].balance);
     }
     fetchData();
-  }, [currentAccount, balance]);
+  }, [currentAccount, balance, user]);
 
   return (
     <AtmStyle>
@@ -98,6 +111,7 @@ const Atm = ({ user, setUser, setIsLoggedIn }) => {
           </div>
         </div>
         <div className='col2'>
+          <Button title='Create new account' onClick={handleCreateAccount} />
           <AccountList
             accountList={user.account}
             setCurrentAccount={setCurrentAccount}

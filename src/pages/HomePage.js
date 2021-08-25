@@ -7,6 +7,7 @@ import Atm from "../components/Atm";
 import Login from "../components/Login";
 
 import { useState } from "react";
+import SignUpForm from "../components/SignUpForm";
 
 const HomePage = () => {
   const [user, setUser] = useState({
@@ -15,17 +16,23 @@ const HomePage = () => {
     account: [{}],
   });
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isRegister, setIsRegister] = useState(false);
 
   return (
     <HomeStyle colors={colors}>
       <Title title='Best Bank Ever' />
       <Card minWidth='800px'>
         {!isLoggedIn && (
-          <Login setUser={setUser} setIsLoggedIn={setIsLoggedIn} />
+          <Login
+            setUser={setUser}
+            setIsLoggedIn={setIsLoggedIn}
+            setIsRegister={setIsRegister}
+          />
         )}
         {isLoggedIn && (
           <Atm user={user} setUser={setUser} setIsLoggedIn={setIsLoggedIn} />
         )}
+        {isRegister && <SignUpForm setIsRegister={setIsRegister} />}
       </Card>
     </HomeStyle>
   );

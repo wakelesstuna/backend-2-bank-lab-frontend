@@ -5,7 +5,7 @@ import InputField from "./ui/InputField";
 
 import { authUser } from "../api/api";
 
-const Login = ({ setUser, setIsLoggedIn }) => {
+const Login = ({ setUser, setIsLoggedIn, setIsRegister }) => {
   const [loginError, setLoginError] = useState(false);
   const [loginErrorMsg, setLoginErrorMsg] = useState("");
   const [username, setUserName] = useState("");
@@ -51,6 +51,11 @@ const Login = ({ setUser, setIsLoggedIn }) => {
           setValue={setPassword}
         />
         <Button title='Sign In' onClick={handleLogin} />
+        <div className='signup' onClick={() => setIsRegister(true)}>
+          <p>
+            Dont't have an account? <span>Sign Up</span>
+          </p>
+        </div>
       </div>
     </LoginStyle>
   );
@@ -67,6 +72,15 @@ const LoginStyle = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
+  }
+  .signup {
+    cursor: pointer;
+    p {
+      font-size: 0.8rem;
+    }
+    span {
+      font-weight: bolder;
+    }
   }
 `;
 export default Login;
