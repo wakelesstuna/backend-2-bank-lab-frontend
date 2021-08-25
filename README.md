@@ -22,20 +22,22 @@ Pushes the local docker image to an repository on dockerhub.
 
 ## Docker compose exampel file
 
-### `# docker version: '3' frontend:
+```js
+docker version: '3' frontend:
 
-    container_name: frontend
-    image: wakelesstuna/backend-2-bank-lab-frontend:v1
-    volumes:
-      - './:/app'
-      - '/app/node_modules'
-    ports:
-      - 3000:3000
-    stdin_open: true
-    environment:
-      - CHOKIDAR_USEPOLLING=true
-      - REACT_APP_BASE_URL=http://localhost:8080/api/v1
-    command: npm run start`
+   container_name: frontend
+   image: wakelesstuna/backend-2-bank-lab-frontend:v1
+   volumes:
+     - './:/app'
+     - '/app/node_modules'
+   ports:
+     - 3000:3000
+   stdin_open: true
+   environment:
+     - CHOKIDAR_USEPOLLING=true
+     - REACT_APP_BASE_URL=http://localhost:8080/api/v1
+   command: npm run start
+```
 
 **Note: this is a one-way operation. Once you `eject`, you can’t go back!**
 
