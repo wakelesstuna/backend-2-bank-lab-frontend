@@ -3,13 +3,14 @@ import styled from "styled-components";
 // Icons
 import { RiLogoutBoxLine } from "react-icons/ri";
 
-const Logout = ({ setIsLoggedIn, setUser }) => {
-  const handleLogout = () => {
+const Logout = ({ setIsLoggedIn, setUserLoggedIn, setUser, handleLogout }) => {
+  /* const handleLogout = () => {
     setIsLoggedIn(false);
+    setUserLoggedIn(false);
     setUser({});
-  };
+  }; */
   return (
-    <LogoutStyle onClick={handleLogout}>
+    <LogoutStyle onClick={() => handleLogout()}>
       <RiLogoutBoxLine />
     </LogoutStyle>
   );

@@ -1,5 +1,6 @@
 // Styles
 import styled from "styled-components";
+import { colors } from "../../constants/color";
 
 const InputField = ({
   type,
@@ -26,7 +27,7 @@ const InputField = ({
   };
 
   return (
-    <InputFieldStyle>
+    <InputFieldStyle colors={colors}>
       <label htmlFor={placeholder}>{label}</label>
       <input
         id={placeholder}
@@ -69,7 +70,7 @@ const InputFieldStyle = styled.div`
     left: 14px;
     bottom: 0;
     font-size: 0.8rem;
-    color: #ff3333;
+    color: ${(props) => props.colors.error};
   }
 `;
 

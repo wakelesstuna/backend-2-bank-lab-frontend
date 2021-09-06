@@ -8,15 +8,24 @@ import Login from "../components/Login";
 
 import { useState } from "react";
 import SignUpForm from "../components/SignUpForm";
+import AdminPage from "./AdminPage";
 
 const HomePage = () => {
   const [user, setUser] = useState({
     username: "",
     password: "",
     account: [{}],
+    roles: [
+      {
+        role: "ADMIN",
+      },
+    ],
   });
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isRegister, setIsRegister] = useState(false);
+
+  const [userLoggedIn, setUserLoggedIn] = useState(false);
+  const [adminLoggedIn, setAdminLoggedIn] = useState(false);
 
   return (
     <HomeStyle colors={colors}>
@@ -24,13 +33,28 @@ const HomePage = () => {
       <Card minWidth='800px'>
         {!isLoggedIn && (
           <Login
+            user={user}
             setUser={setUser}
             setIsLoggedIn={setIsLoggedIn}
+            setUserLoggedIn={setUserLoggedIn}
+            setAdminLoggedIn={setAdminLoggedIn}
             setIsRegister={setIsRegister}
           />
         )}
-        {isLoggedIn && (
-          <Atm user={user} setUser={setUser} setIsLoggedIn={setIsLoggedIn} />
+        {userLoggedIn && (
+          <Atm
+            user={user}
+            setUser={setUser}
+            setIsLoggedIn={setIsLoggedIn}
+            setUserLoggedIn={setUserLoggedIn}
+          />
+        )}
+        {adminLoggedIn && (
+          <AdminPage
+            setIsLoggedIn={setIsLoggedIn}
+            setAdminLoggedIn={setAdminLoggedIn}
+            setUser={setUser}
+          />
         )}
         {isRegister && <SignUpForm setIsRegister={setIsRegister} />}
       </Card>

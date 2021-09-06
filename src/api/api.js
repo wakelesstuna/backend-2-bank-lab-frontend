@@ -1,6 +1,8 @@
 import axios from "axios";
+import Cookies from "universal-cookie/es6";
 
 const baseUrl = process.env.REACT_APP_BASE_URL;
+const cookies = new Cookies();
 
 /**
  * Creates a user
@@ -10,6 +12,23 @@ const baseUrl = process.env.REACT_APP_BASE_URL;
 export async function createUser(user) {
   console.log("creating user to db...");
   return await axios.post(`${baseUrl}/users/create`, user);
+}
+
+/**
+ * Fetching a user from databse based on username
+ * @param {String} username
+ * @returns User obj
+ */
+export async function fetchUsersFunction() {
+  console.log("fetching user from db...");
+  const jwtKey = cookies.get("jwt_key");
+  const config = {
+    headers: {
+      Authorization: jwtKey,
+    },
+  };
+
+  return await axios.get(`${baseUrl}/users`, config);
 }
 
 /**
@@ -30,9 +49,13 @@ export async function fetchUser(username) {
  */
 export async function authUser(username, password) {
   console.log("authenticate user in db...");
-  return await axios.get(
-    `${baseUrl}/users/auth/?username=${username}&password=${password}`
+
+  const response = await axios.post(
+    `http://localhost:8000/login?username=${username}&password=${password}`
   );
+  const jwtToken = response.headers.Authorization;
+  cookies.set("jwt_token", jwtToken);
+  return response;
 }
 
 /**
@@ -70,4 +93,13 @@ export async function makeWithdraw(username, withdraw, accountNumber) {
   return await axios.put(
     `${baseUrl}/accounts/withdraw?withdraw=${withdraw}&username=${username}&accountNumber=${accountNumber}`
   );
+}
+
+export async function openAccountFunction(username, password) {
+  console.log(`open account for ${username}`);
+  const user = {
+    username,
+    password,
+  };
+  return await axios.post(`${baseUrl}/account/open`, user);
 }

@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 // Styles
 import styled from "styled-components";
+import { colors } from "../constants/color";
 // Components
 import Button from "./ui/Button";
 import InputField from "./ui/InputField";
@@ -16,8 +17,10 @@ import {
   fetchUser,
   createAccount,
 } from "../api/api";
+// Util
+import { makeFirstLetterCapital } from "../utils/util";
 
-const Atm = ({ user, setUser, setIsLoggedIn }) => {
+const Atm = ({ user, setUser, setIsLoggedIn, setUserLoggedIn }) => {
   const [currentAccount, setCurrentAccount] = useState(1);
   const [balance, setBalance] = useState(0);
   const [deposit, setDeposit] = useState(0);
@@ -25,10 +28,22 @@ const Atm = ({ user, setUser, setIsLoggedIn }) => {
 
   const [withdrawError, setWithdrawError] = useState(false);
   const [withdrawErrorMsg, setWithdrawErrorMsg] = useState("");
+  const [createAccountError, setCreateAccountError] = useState(false);
+  const [createAccountErrorMsg, setCreateAccountErrorMsg] = useState("");
 
   const handleCreateAccount = async () => {
-    const response = await createAccount(user.username);
-    setCurrentAccount(response.data.accountNumber);
+    try {
+      const response = await createAccount(user.username);
+      setCurrentAccount(response.data.accountNumber);
+      setCreateAccountError(false);
+    } catch (error) {
+      const err = error.response;
+      console.log(err);
+      if (err.status === 400) {
+        setCreateAccountErrorMsg(err.data.message);
+        setCreateAccountError(true);
+      }
+    }
   };
 
   const handleDeposit = async () => {
@@ -56,7 +71,13 @@ const Atm = ({ user, setUser, setIsLoggedIn }) => {
     }
   };
 
-  useEffect(() => {
+  const handleLogout = () => {
+    setUserLoggedIn(false);
+    setIsLoggedIn(false);
+    setUser({});
+  };
+
+  /* useEffect(() => {
     async function fetchData() {
       const response = await fetchUser(user.username);
       const fetchedUser = await response.data;
@@ -64,16 +85,16 @@ const Atm = ({ user, setUser, setIsLoggedIn }) => {
       setBalance(fetchedUser.account[currentAccount - 1].balance);
     }
     fetchData();
-  }, [currentAccount, balance, user]);
+  }, [currentAccount, balance]); */
 
   return (
-    <AtmStyle>
+    <AtmStyle colors={colors}>
       <div className='header'>
         <div className='titleWrapper'>
           <Title title='Atm' />
         </div>
         <div className='logoutIconWrapper'>
-          <Logout setIsLoggedIn={setIsLoggedIn} setUser={setUser} />
+          <Logout handleLogout={handleLogout} />
         </div>
       </div>
       <div className='row'>
@@ -108,6 +129,11 @@ const Atm = ({ user, setUser, setIsLoggedIn }) => {
           </div>
         </div>
         <div className='col2'>
+          {createAccountError && (
+            <p className='error'>
+              {makeFirstLetterCapital(createAccountErrorMsg)}
+            </p>
+          )}
           <Button title='Create new account' onClick={handleCreateAccount} />
           <AccountList
             accountList={user.account}
@@ -148,6 +174,9 @@ const AtmStyle = styled.div`
     p {
       padding-left: 5px;
     }
+  }
+  .error {
+    color: ${(props) => props.colors.error};
   }
 `;
 

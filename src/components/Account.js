@@ -34,6 +34,7 @@ const AccountStyle = styled.div`
 
   .contentWrapper {
     padding: 0rem 1rem;
+    list-style: none;
   }
 
   .accountId {

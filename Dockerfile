@@ -1,4 +1,3 @@
-
 # Step 1
 FROM node:10-alpine as build-step
 

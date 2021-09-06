@@ -11,10 +11,9 @@ const Button = ({ title, onClick }) => {
 };
 
 const ButtonStyle = styled.div`
-  width: 100%;
-  max-width: 250px;
+  width: fit-content;
   padding: 0.5rem 2rem;
-  margin: 1rem 0;
+  margin: 1rem auto;
   cursor: pointer;
   border: none;
   border-radius: 3px;

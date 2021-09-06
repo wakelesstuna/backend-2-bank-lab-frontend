@@ -8,17 +8,42 @@ import InputField from "./ui/InputField";
 // Api
 import { authUser } from "../api/api";
 
-const Login = ({ setUser, setIsLoggedIn, setIsRegister }) => {
+const Login = ({
+  user,
+  setUser,
+  setAdminLoggedIn,
+  setUserLoggedIn,
+  setIsLoggedIn,
+  setIsRegister,
+}) => {
   const [loginError, setLoginError] = useState(false);
   const [loginErrorMsg, setLoginErrorMsg] = useState("");
   const [username, setUserName] = useState("");
   const [password, setPassword] = useState("");
 
   const handleLogin = async () => {
+    console.log("sending auth request for server");
     try {
       const response = await authUser(username, password);
-      setUser(response.data);
+      const user = response.data;
+      const fetchUser = {
+        ...user,
+        account: [
+          {
+            id: "123112-12321",
+            accountNumber: 1,
+            balance: 0,
+          },
+        ],
+      };
+      setUser(fetchUser);
+      // setUser(user);
       setLoginError(false);
+      if (user.role == "ADMIN") {
+        setAdminLoggedIn(true);
+      } else if (user.role == "USER") {
+        setUserLoggedIn(true);
+      }
       setIsLoggedIn(true);
     } catch (error) {
       const err = error.response;
